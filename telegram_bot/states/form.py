@@ -1,4 +1,5 @@
 import json
+import re
 
 from aiogram import Router, F, Bot
 from aiogram.exceptions import TelegramBadRequest
@@ -53,16 +54,29 @@ async def process_fullname(message: Message, state: FSMContext) -> None:
 @router.message(Form.phone_number)
 async def process_phone_number(message: Message, state: FSMContext) -> None:
     try:
-        phone_number = message.text
-        if not phone_number[1:].isdigit():
+        phone_number = message.text.strip()
+        cleaned_number = re.sub(r'[\s\(\)\-]', '', phone_number)
+
+        if cleaned_number.startswith('+7') and len(cleaned_number) == 12 and cleaned_number[1:].isdigit():
+            valid_number = cleaned_number
+        elif cleaned_number.startswith('8') and len(cleaned_number) == 11 and cleaned_number.isdigit():
+            valid_number = '+7' + cleaned_number[1:]
+        elif cleaned_number.startswith('7') and len(cleaned_number) == 11 and cleaned_number.isdigit():
+            valid_number = '+' + cleaned_number
+        else:
             raise ValueError
-        await state.update_data(phone_number=message.text)
+
+        await state.update_data(phone_number=valid_number)
         await message.answer(text='Введите город:')
         await state.set_state(Form.city)
 
     except ValueError:
-        await message.answer('🚫 Вы ввели некорректный номер телефона!\nПопробуйте еще раз.',
-                             reply_markup=get_stop_form_keyboard())
+        await message.answer(
+            '🚫 Вы ввели некорректный номер телефона!\n'
+            '✅ Используйте формат: +79123456789 или 89123456789\n'
+            'Попробуйте еще раз.',
+            reply_markup=get_stop_form_keyboard()
+        )
 
 
 @router.message(Form.city)
@@ -81,17 +95,9 @@ async def process_dog_breed(message: Message, state: FSMContext) -> None:
 
 @router.message(Form.dog_age)
 async def process_dog_age(message: Message, state: FSMContext) -> None:
-    try:
-        dog_age = message.text
-        if not dog_age.isdigit():
-            raise ValueError
-        await state.update_data(dog_age=message.text)
-        await message.answer(text='Как собака переносит поездки на транспорте? Как можете перемещаться по городу?')
-        await state.set_state(Form.transport_question)
-
-    except ValueError:
-        await message.answer('🚫 Вы ввели некорректный возраст собаки!\nПопробуйте еще раз.',
-                             reply_markup=get_stop_form_keyboard())
+    await state.update_data(dog_age=message.text)
+    await message.answer(text='Как собака переносит поездки на транспорте? Как можете перемещаться по городу?')
+    await state.set_state(Form.transport_question)
 
 
 @router.message(Form.transport_question)
