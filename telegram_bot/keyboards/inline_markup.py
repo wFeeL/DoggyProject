@@ -7,7 +7,7 @@ def get_form_button(text='✏️ Заполнить анкету') -> list[Inlin
     button = [InlineKeyboardButton(text=text, callback_data=callback_text.CALLBACK['send_form'])]
     return button
 
-def get_site_button(text='ℹ️ Сайт') -> list[InlineKeyboardButton]:
+def get_site_button(text='ℹ️ Сервис') -> list[InlineKeyboardButton]:
     button = [InlineKeyboardButton(text=text, url='https://doggy-logy.ru')]
     return button
 

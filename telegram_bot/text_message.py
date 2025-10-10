@@ -8,12 +8,10 @@ START_MESSAGE = """
 🗣 Наши соцсети: /contact
 ℹ️ Подробнее о нашем сервисе: /about"""
 
-CONTACT = """🗣️ Мы в соцсетях:\n
-Telegram - @doggy_logy
-Сайт - doggy-logy.ru
-VK - vk.com/doggylogy
-YouTube - www.youtube.com/@doggylogy
-"""
+CONTACT = """🙋‍♀️ <b>Контактная информация:
+@doggy_logy
+@manager_DoggyLogy</b>\n
+🌐 <b>Следите за нами в социальных сетях:</b> - <a href="https://doggy-logy.ru/">Сайт</a> | <a href="https://vk.com/doggylogy">VK</a> | <a href="https://youtube.com/@doggylogy?si=TfojM_-KXnH6YckN">YouTube</a> | <a href="https://t.me/DoggyLogyChannel">Наш канал</a> | <a href="https://t.me/DoggyLogy">Чат</a> | <a href="https://www.instagram.com/doggy.logy">Instagram</a> | <a href="https://www.tiktok.com/@doggy.logy?_t=ZS-90EzzqHoy5X&_r=1">TikTok</a>"""
 
 ABOUT = """🐶 <b>Doggy Logy</b> - это сервис для владельцев собак в Москве.
 
