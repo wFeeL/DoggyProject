@@ -82,21 +82,21 @@ async def process_phone_number(message: Message, state: FSMContext) -> None:
 @router.message(Form.city)
 async def process_city(message: Message, state: FSMContext) -> None:
     await state.update_data(city=message.text)
-    await message.answer(text='Введите породу собаки:')
+    await message.answer(text='Введите породу питомца:')
     await state.set_state(Form.dog_breed)
 
 
 @router.message(Form.dog_breed)
 async def process_dog_breed(message: Message, state: FSMContext) -> None:
     await state.update_data(dog_breed=message.text)
-    await message.answer(text='Введите возраст собаки:')
+    await message.answer(text='Введите возраст питомца:')
     await state.set_state(Form.dog_age)
 
 
 @router.message(Form.dog_age)
 async def process_dog_age(message: Message, state: FSMContext) -> None:
     await state.update_data(dog_age=message.text)
-    await message.answer(text='Как собака переносит поездки на транспорте? Как можете перемещаться по городу?')
+    await message.answer(text='Как питомец переносит поездки на транспорте? Как можете перемещаться по городу?')
     await state.set_state(Form.transport_question)
 
 
@@ -110,14 +110,14 @@ async def process_transport_question(message: Message, state: FSMContext) -> Non
 @router.message(Form.shooting_day_question)
 async def process_shooting_day_question(message: Message, state: FSMContext) -> None:
     await state.update_data(shooting_day_question=message.text)
-    await message.answer(text='Опишите особенности собаки и навыки:')
+    await message.answer(text='Опишите особенности и навыки вашего питомца:')
     await state.set_state(Form.dog_skills)
 
 
 @router.message(Form.dog_skills)
 async def process_dog_skills(message: Message, state: FSMContext) -> None:
     await state.update_data(dog_skills=message.text)
-    await message.answer(text='Отправьте фотографию вашей собаки:', reply_markup=get_skip_photos_keyboard())
+    await message.answer(text='Отправьте фотографию вашего питомца:', reply_markup=get_skip_photos_keyboard())
     await state.set_state(Form.file_id)
 
 
