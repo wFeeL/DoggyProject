@@ -8,7 +8,7 @@ def get_form_button(text='✏️ Заполнить анкету') -> list[Inlin
     return button
 
 def get_site_button(text='ℹ️ Сервис') -> list[InlineKeyboardButton]:
-    button = [InlineKeyboardButton(text=text, url='https://doggy-logy.ru')]
+    button = [InlineKeyboardButton(text=text, url='https://t.me/DoggyLogy_bot')]
     return button
 
 def get_telegram_channel_button(text='👥 Сообщество') -> list[InlineKeyboardButton]:

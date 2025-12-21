@@ -4,10 +4,10 @@ from aiogram import Router, Bot, F
 from aiogram.client.bot import DefaultBotProperties
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.filters import Command
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message, CallbackQuery, FSInputFile
 
 from telegram_bot import text_message, callback_text
-from telegram_bot.config_reader import config
+from telegram_bot.config_reader import config, img_path
 from telegram_bot.keyboards.inline_markup import get_start_keyboard, get_about_keyboard, get_form_keyboard
 
 router = Router()  # Create a router for bot's commands
@@ -30,7 +30,12 @@ async def send_contact(message: Message) -> None:
 # Command: /about
 @router.message(Command('about'))
 async def send_about(message: Message) -> None:
-    await message.answer(text=text_message.ABOUT, reply_markup=get_about_keyboard(), disable_web_page_preview=True)
+    path = f"{img_path}/about.jpg"
+    print(path)
+    await bot.send_photo(
+        chat_id=message.chat.id, photo=FSInputFile(path=path), reply_markup=get_about_keyboard(),
+        caption=text_message.ABOUT
+    )
 
 # Command: /form
 @router.message(Command('form'))

@@ -13,26 +13,8 @@ CONTACT = """🙋‍♀️ <b>Контактная информация:
 @manager_DoggyLogy</b>\n
 🌐 <b>Следите за нами в социальных сетях:</b> - <a href="https://doggy-logy.ru/">Сайт</a> | <a href="https://vk.com/doggylogy">VK</a> | <a href="https://youtube.com/@doggylogy?si=TfojM_-KXnH6YckN">YouTube</a> | <a href="https://t.me/DoggyLogyChannel">Наш канал</a> | <a href="https://t.me/DoggyLogy">Чат</a> | <a href="https://www.instagram.com/doggy.logy">Instagram</a> | <a href="https://www.tiktok.com/@doggy.logy?_t=ZS-90EzzqHoy5X&_r=1">TikTok</a>"""
 
-ABOUT = """🐶 <b>Doggy Logy</b> - это сервис для владельцев собак в Москве.
-
-• @DoggyLogySale_bot - бесплатная подписка на сервис
-• Гуманная коррекция поведения/ обучение командам 
-• Помощь с выбором щенка
-• Передержка
-• Догситтер/выгул
-• Разработка рациона 
-• Консультации ветеринара
-• Страхование здоровья питомца
-• Подготовка к выставкам 
-• Груминг 
-• Зооюрист
-• Зоотакси
-• Пэт-фотограф 
-
-Мы всегда открыты для обратной связи!
-<i>С любовью к животным и их людям, DoggyLogy ❤️</i>
-@manager_DogyLogy
-@doggy_logy"""
+ABOUT = """<b>DoggyLogy</b>: комплексная поддержка для владельцев собак и кошек🐾\n
+<blockquote>Чтобы узнать подробнее об услугах, перейдите по кнопке «сервис».</blockquote>"""
 
 FORM = """📝 Заполните анкету для участия <b>Вашего</b> питомца в съемках <i>рекламы, клипа или фильма</i>!\n
 ℹ Для участия в съемке питомец должен быть <b>социализирован</b> и <b>управляем</b>.\n

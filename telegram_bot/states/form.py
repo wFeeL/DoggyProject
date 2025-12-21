@@ -187,22 +187,25 @@ async def cancel_send_data(callback: CallbackQuery, state: FSMContext) -> None:
 @router.callback_query(lambda call: 'send' in call.data or 'cancel' in call.data)
 async def send_data_to_admin(callback: CallbackQuery, state: FSMContext) -> None:
     json_data = json.loads(callback.data)
-    admin_chat_id = config.admin_telegram_id
+    admin_chat_ids = config.admin_telegram_ids
     if json_data['action'] == 'send':
         try:
             first_message = int(json_data['first_msg'])
             last_message = int(json_data['last_msg'])
             message_ids = list(range(first_message, last_message))
+            print(message_ids)
 
-            await bot.forward_messages(chat_id=admin_chat_id, from_chat_id=callback.message.chat.id,
-                                       message_ids=message_ids)
+            for admin_chat_id in admin_chat_ids:
+                await bot.forward_messages(chat_id=admin_chat_id, from_chat_id=callback.message.chat.id,
+                                           message_ids=message_ids)
             await bot.delete_messages(chat_id=callback.message.chat.id, message_ids=message_ids)
 
         except KeyError:
             data = await state.get_data()
-            message_id = data['message_id']
-            await bot.forward_message(chat_id=admin_chat_id, from_chat_id=callback.message.chat.id,
-                                      message_id=message_id)
+            message_id = [data['message_id']]
+            for admin_chat_id in admin_chat_ids:
+                await bot.forward_messages(chat_id=admin_chat_id, from_chat_id=callback.message.chat.id,
+                                           message_ids=message_id)
 
         except TelegramBadRequest as error:
             logger.info(error.message)
