@@ -7,12 +7,12 @@ def get_form_button(text='✏️ Заполнить анкету') -> list[Inlin
     button = [InlineKeyboardButton(text=text, callback_data=callback_text.CALLBACK['send_form'])]
     return button
 
-def get_site_button(text='ℹ️ Сервис') -> list[InlineKeyboardButton]:
-    button = [InlineKeyboardButton(text=text, url='https://t.me/DoggyLogy_bot')]
+def get_site_button(text='ℹ️ Сервис', url='https://t.me/DoggyLogy_bot') -> list[InlineKeyboardButton]:
+    button = [InlineKeyboardButton(text=text, url=url)]
     return button
 
 def get_telegram_channel_button(text='👥 Сообщество') -> list[InlineKeyboardButton]:
-    button = [InlineKeyboardButton(text=text, url='https://t.me/DoggyLogyChannel')]
+    button = [InlineKeyboardButton(text=text, url='https://doggy-logy.ru/challenge')]
     return button
 
 def get_skip_photo_button(text='Пропустить выбор фото ⏩') -> list[InlineKeyboardButton]:
@@ -27,7 +27,7 @@ def get_start_keyboard() -> InlineKeyboardMarkup:
 
 def get_about_keyboard() -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
-    builder.add(*get_site_button(), *get_form_button())
+    builder.add(*get_site_button(url='https://doggy-logy.ru/'), *get_form_button())
     builder.adjust(1, 1)
     return builder.as_markup()
 

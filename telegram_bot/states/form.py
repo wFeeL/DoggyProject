@@ -1,5 +1,4 @@
 import json
-import re
 
 from aiogram import Router, F, Bot
 from aiogram.exceptions import TelegramBadRequest
@@ -19,14 +18,17 @@ from telegram_bot.middleware.album_middleware import AlbumMiddleware
 
 
 class Form(StatesGroup):
-    fullname = State()
-    phone_number = State()
+    name = State()
     city = State()
-    dog_breed = State()
-    dog_age = State()
+    species_breed = State()
+    gender = State()
+    birth_date = State()
     transport_question = State()
     shooting_day_question = State()
-    dog_skills = State()
+    fears = State()
+    skills = State()
+    shooting_experience = State()
+    contact = State()
     file_id = State()
     message_id = State()
     none_state = State()
@@ -40,84 +42,84 @@ bot = Bot(config.bot_token, default=DefaultBotProperties(parse_mode='HTML'))
 @router.callback_query(F.data == 'start_form')
 async def handle_start_form(callback: CallbackQuery, state: FSMContext) -> None:
     await callback.message.delete()
-    await callback.message.answer(text='Введите ваше ФИО:')
-    await state.set_state(Form.fullname)
+    await callback.message.answer(text=text_message.QUESTION_NAME)
+    await state.set_state(Form.name)
 
 
-@router.message(Form.fullname)
-async def process_fullname(message: Message, state: FSMContext) -> None:
-    await state.update_data(fullname=message.text)
-    await message.answer(text='Введите ваш номер телефона:')
-    await state.set_state(Form.phone_number)
-
-
-@router.message(Form.phone_number)
-async def process_phone_number(message: Message, state: FSMContext) -> None:
-    try:
-        phone_number = message.text.strip()
-        cleaned_number = re.sub(r'[\s\(\)\-]', '', phone_number)
-
-        if cleaned_number.startswith('+7') and len(cleaned_number) == 12 and cleaned_number[1:].isdigit():
-            valid_number = cleaned_number
-        elif cleaned_number.startswith('8') and len(cleaned_number) == 11 and cleaned_number.isdigit():
-            valid_number = '+7' + cleaned_number[1:]
-        elif cleaned_number.startswith('7') and len(cleaned_number) == 11 and cleaned_number.isdigit():
-            valid_number = '+' + cleaned_number
-        else:
-            raise ValueError
-
-        await state.update_data(phone_number=valid_number)
-        await message.answer(text='Введите город:')
-        await state.set_state(Form.city)
-
-    except ValueError:
-        await message.answer(
-            '🚫 Вы ввели некорректный номер телефона!\n'
-            '✅ Используйте формат: +79123456789 или 89123456789\n'
-            'Попробуйте еще раз.',
-            reply_markup=get_stop_form_keyboard()
-        )
+@router.message(Form.name)
+async def process_name(message: Message, state: FSMContext) -> None:
+    await state.update_data(name=message.text)
+    await message.answer(text=text_message.QUESTION_CITY)
+    await state.set_state(Form.city)
 
 
 @router.message(Form.city)
 async def process_city(message: Message, state: FSMContext) -> None:
     await state.update_data(city=message.text)
-    await message.answer(text='Введите породу питомца:')
-    await state.set_state(Form.dog_breed)
+    await message.answer(text=text_message.QUESTION_SPECIES_BREED)
+    await state.set_state(Form.species_breed)
 
 
-@router.message(Form.dog_breed)
-async def process_dog_breed(message: Message, state: FSMContext) -> None:
-    await state.update_data(dog_breed=message.text)
-    await message.answer(text='Введите возраст питомца:')
-    await state.set_state(Form.dog_age)
+@router.message(Form.species_breed)
+async def process_species_breed(message: Message, state: FSMContext) -> None:
+    await state.update_data(species_breed=message.text)
+    await message.answer(text=text_message.QUESTION_GENDER)
+    await state.set_state(Form.gender)
 
 
-@router.message(Form.dog_age)
-async def process_dog_age(message: Message, state: FSMContext) -> None:
-    await state.update_data(dog_age=message.text)
-    await message.answer(text='Как питомец переносит поездки на транспорте? Как можете перемещаться по городу?')
+@router.message(Form.gender)
+async def process_gender(message: Message, state: FSMContext) -> None:
+    await state.update_data(gender=message.text)
+    await message.answer(text=text_message.QUESTION_BIRTH_DATE)
+    await state.set_state(Form.birth_date)
+
+
+@router.message(Form.birth_date)
+async def process_birth_date(message: Message, state: FSMContext) -> None:
+    await state.update_data(birth_date=message.text)
+    await message.answer(text=text_message.QUESTION_TRANSPORT)
     await state.set_state(Form.transport_question)
 
 
 @router.message(Form.transport_question)
 async def process_transport_question(message: Message, state: FSMContext) -> None:
     await state.update_data(transport_question=message.text)
-    await message.answer(text='Можете ли выделить по необходимости день для съемки?')
+    await message.answer(text=text_message.QUESTION_SHOOTING_DAY)
     await state.set_state(Form.shooting_day_question)
 
 
 @router.message(Form.shooting_day_question)
 async def process_shooting_day_question(message: Message, state: FSMContext) -> None:
     await state.update_data(shooting_day_question=message.text)
-    await message.answer(text='Опишите особенности и навыки вашего питомца:')
-    await state.set_state(Form.dog_skills)
+    await message.answer(text=text_message.QUESTION_FEARS)
+    await state.set_state(Form.fears)
 
 
-@router.message(Form.dog_skills)
-async def process_dog_skills(message: Message, state: FSMContext) -> None:
-    await state.update_data(dog_skills=message.text)
-    await message.answer(text='Отправьте фотографию вашего питомца:', reply_markup=get_skip_photos_keyboard())
+@router.message(Form.fears)
+async def process_fears(message: Message, state: FSMContext) -> None:
+    await state.update_data(fears=message.text)
+    await message.answer(text=text_message.QUESTION_SKILLS)
+    await state.set_state(Form.skills)
+
+
+@router.message(Form.skills)
+async def process_skills(message: Message, state: FSMContext) -> None:
+    await state.update_data(skills=message.text)
+    await message.answer(text=text_message.QUESTION_EXPERIENCE)
+    await state.set_state(Form.shooting_experience)
+
+
+@router.message(Form.shooting_experience)
+async def process_shooting_experience(message: Message, state: FSMContext) -> None:
+    await state.update_data(shooting_experience=message.text)
+    await message.answer(text=text_message.QUESTION_CONTACT)
+    await state.set_state(Form.contact)
+
+
+@router.message(Form.contact)
+async def process_contact(message: Message, state: FSMContext) -> None:
+    await state.update_data(contact=message.text)
+    await message.answer(text=text_message.QUESTION_PHOTO, reply_markup=get_skip_photos_keyboard())
     await state.set_state(Form.file_id)
 
 
