@@ -21,7 +21,7 @@ def get_skip_photo_button(text='Пропустить выбор фото ⏩') -
 
 def get_start_keyboard() -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
-    builder.add(*get_site_button(), *get_telegram_channel_button(), *get_form_button())
+    builder.add(*get_site_button(url='https://doggy-logy.ru/'), *get_telegram_channel_button(), *get_form_button())
     builder.adjust(2, 1)
     return builder.as_markup()
 
